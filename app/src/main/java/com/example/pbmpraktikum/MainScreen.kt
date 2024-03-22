@@ -30,14 +30,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.dummytest.ui.screen.AddStudentData
 import com.example.pbmpraktikum.ui.screen.About
+import com.example.pbmpraktikum.ui.screen.DeleteAllData
 import com.example.pbmpraktikum.ui.screen.ShowStudentData
+import com.example.pbmpraktikum.ui.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -48,6 +52,7 @@ fun MainScreen() {
     val currentDestination = navBackStackEntry?.destination?.route
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val userViewModel: UserViewModel = viewModel(factory = UserViewModel.factory)
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -60,7 +65,7 @@ fun MainScreen() {
                 FloatingActionButtonContent(scope, drawerState)
             }
         ) { innerPadding ->
-            NavigationScreenContent(navController, innerPadding)
+            NavigationScreenContent(navController, innerPadding, userViewModel)
         }
     }
 }
@@ -69,6 +74,7 @@ fun MainScreen() {
 private fun NavigationScreenContent(
     navController: NavHostController,
     innerPadding: PaddingValues,
+    userViewModel: UserViewModel
 ) {
     Surface(
         color = MaterialTheme.colorScheme.background
@@ -78,8 +84,10 @@ private fun NavigationScreenContent(
             startDestination = "showstudentdata",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("showstudentdata") { ShowStudentData() }
+            composable("showstudentdata") { ShowStudentData(userViewModel) }
             composable("about") { About(navController) }
+            composable("addstudentdata") { AddStudentData(navController, userViewModel) }
+            composable("deletealldata") { DeleteAllData(navController, userViewModel) }
         }
     }
 }
@@ -157,6 +165,30 @@ private fun SideBar(
             drawerState,
             "About",
             "about"
+        )
+        Divider(
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        SideBarItem(
+            navController,
+            scope,
+            currentDestination,
+            drawerState,
+            "Add Data",
+            "addstudentdata"
+        )
+        Divider(
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        SideBarItem(
+            navController,
+            scope,
+            currentDestination,
+            drawerState,
+            "Delete Data",
+            "deletealldata"
         )
         Divider(
             thickness = 2.dp,

@@ -14,11 +14,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -27,11 +33,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pbmpraktikum.R
+import com.example.pbmpraktikum.ui.database.User
 import com.example.pbmpraktikum.ui.theme.PBMPraktikumTheme
+import com.example.pbmpraktikum.ui.viewmodel.UserViewModel
 
 @Composable
-fun ShowStudentData() {
+fun ShowStudentData(userViewModel: UserViewModel) {
+    var users by remember { mutableStateOf(listOf<User>()) }
+
+    LaunchedEffect(key1 = userViewModel) {
+        val loadedUsers = userViewModel.getAllUsers()
+        users = loadedUsers
+    }
+
     LazyColumn(
         modifier = Modifier.fillMaxHeight()
     ) {
@@ -39,13 +55,9 @@ fun ShowStudentData() {
             Logo(logo = painterResource(id = R.drawable.usk))
         }
 
-        items(10) {
+        itemsIndexed(users) { _, user ->
             Spacer(modifier = Modifier.height(16.dp))
-            InfoCard(
-                name = "Your Name",
-                nim = "xx08107010xxx",
-                description = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
-            )
+            InfoCard(name = user.name, nim = user.nim, description = user.description)
         }
     }
 }
@@ -146,6 +158,6 @@ fun InfoCardPreview() {
 @Composable
 fun MainScreenPreview() {
     PBMPraktikumTheme {
-        ShowStudentData()
+        ShowStudentData(viewModel(factory = UserViewModel.factory))
     }
 }

@@ -1,6 +1,5 @@
 package com.example.pbmpraktikum.ui.screen
 
-import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,29 +30,12 @@ import com.example.pbmpraktikum.R
 import com.example.pbmpraktikum.ui.theme.PBMPraktikumTheme
 
 @Composable
-fun ShowStudentData() {
-    LazyColumn(
-        modifier = Modifier.fillMaxHeight()
-    ) {
-        item {
-            Logo(logo = painterResource(id = R.drawable.usk))
-        }
-
-        items(10) {
-            Spacer(modifier = Modifier.height(16.dp))
-            InfoCard(
-                name = "Your Name",
-                nim = "xx08107010xxx",
-                description = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
-            )
-        }
-    }
-}
-
-@Composable
 fun Logo(logo: Painter) {
     Box(
-        modifier = Modifier.background(color = MaterialTheme.colorScheme.surface)
+        modifier = Modifier
+            .background(
+                color = MaterialTheme.colorScheme.surface
+            )
     ) {
         Row(
             modifier = Modifier
@@ -66,7 +48,6 @@ fun Logo(logo: Painter) {
                 contentDescription = null,
                 modifier = Modifier.size(48.dp),
             )
-
             Text(
                 text = "Universitas Syiah Kuala",
                 modifier = Modifier.weight(1F),
@@ -86,19 +67,19 @@ fun InfoCard(name: String, nim: String, description: String) {
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface,
         ),
-        border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary)
+        border = BorderStroke(
+            2.dp, MaterialTheme.colorScheme.secondary
+        )
     ) {
         Column(
             modifier = Modifier.padding(8.dp),
         ) {
-
             Row {
                 Text(
                     text = name,
                     fontSize = 16.sp,
                     style = MaterialTheme.typography.titleSmall,
                 )
-
                 Text(
                     text = nim,
                     modifier = Modifier.weight(1F),
@@ -106,9 +87,7 @@ fun InfoCard(name: String, nim: String, description: String) {
                     textAlign = TextAlign.End,
                 )
             }
-
             Spacer(modifier = Modifier.height(16.dp))
-
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodySmall,
@@ -119,33 +98,49 @@ fun InfoCard(name: String, nim: String, description: String) {
     }
 }
 
-@Preview(showBackground = true)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun LogoPreview() {
-    PBMPraktikumTheme {
-        Logo(logo = painterResource(id = R.drawable.usk))
+fun ShowStudentData() {
+    LazyColumn(
+        modifier = Modifier.fillMaxHeight()
+    ) {
+        item {
+            Logo(
+                logo = painterResource(id = R.drawable.usk),
+            )
+        }
+
+        items(10) {
+            Spacer(modifier = Modifier.height(16.dp))
+            InfoCard(
+                name = "Your Name",
+                nim = "xx08107010xxx",
+                description = "This is a description"
+            )
+        }
     }
 }
 
 @Preview(showBackground = true)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun InfoCardPreview() {
-    PBMPraktikumTheme {
-        InfoCard(
-            name = "NAME_TEST",
-            nim = "xx08107010xxx",
-            description = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MainScreenPreview() {
     PBMPraktikumTheme {
         ShowStudentData()
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun LogoPreview() {
+    PBMPraktikumTheme {
+        Logo(painterResource(id = R.drawable.usk))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InfoCardPreview() {
+    PBMPraktikumTheme {
+        InfoCard(name = "Test nama", nim = "210801028310293", description = "ashdgfjhads fhasdfkj adshkfjhadsjf ashkdfj ahsdjf hadskfjhaskdfiewuyro agqsf ksjad fc ad")
     }
 }

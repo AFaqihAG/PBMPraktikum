@@ -37,7 +37,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.dummytest.ui.screen.AddStudentData
+import com.example.pbmpraktikum.ui.screen.AddStudentData
 import com.example.pbmpraktikum.ui.screen.About
 import com.example.pbmpraktikum.ui.screen.DeleteAllData
 import com.example.pbmpraktikum.ui.screen.ShowStudentData
@@ -81,13 +81,13 @@ private fun NavigationScreenContent(
     ) {
         NavHost(
             navController = navController,
-            startDestination = "showstudentdata",
+            startDestination = "show_student_data",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("showstudentdata") { ShowStudentData(userViewModel) }
+            composable("show_student_data") { ShowStudentData(userViewModel) }
             composable("about") { About(navController) }
-            composable("addstudentdata") { AddStudentData(navController, userViewModel) }
-            composable("deletealldata") { DeleteAllData(navController, userViewModel) }
+            composable("add_student_data") { AddStudentData(navController, userViewModel) }
+            composable("delete_all_data") { DeleteAllData(navController, userViewModel) }
         }
     }
 }
@@ -152,7 +152,7 @@ private fun SideBar(
             currentDestination,
             drawerState,
             "Main Content",
-            "showstudentdata"
+            "show_student_data"
         )
         Divider(
             thickness = 2.dp,
@@ -176,7 +176,7 @@ private fun SideBar(
             currentDestination,
             drawerState,
             "Add Data",
-            "addstudentdata"
+            "add_student_data"
         )
         Divider(
             thickness = 2.dp,
@@ -188,7 +188,7 @@ private fun SideBar(
             currentDestination,
             drawerState,
             "Delete Data",
-            "deletealldata"
+            "delete_all_data"
         )
         Divider(
             thickness = 2.dp,

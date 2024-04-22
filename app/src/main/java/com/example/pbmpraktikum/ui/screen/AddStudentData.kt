@@ -1,4 +1,4 @@
-package com.example.dummytest.ui.screen
+package com.example.pbmpraktikum.ui.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
@@ -144,7 +144,7 @@ private fun BackButton(navController: NavController) {
         modifier = Modifier.fillMaxWidth()
     ){
         Button(
-            onClick = { navController.navigate("showstudentdata") },
+            onClick = { navController.navigate("show_student_data") },
             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface),
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary)
         ) {

@@ -100,7 +100,7 @@ private fun BackButton(navController: NavController) {
         modifier = Modifier.fillMaxWidth()
     ){
         Button(
-            onClick = { navController.navigate("showstudentdata") },
+            onClick = { navController.navigate("show_student_data") },
             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface),
             elevation = ButtonDefaults.buttonElevation(8.dp),
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary)

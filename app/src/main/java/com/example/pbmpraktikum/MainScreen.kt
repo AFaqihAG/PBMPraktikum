@@ -75,10 +75,10 @@ private fun NavigationScreenContent(
     ) {
         NavHost(
             navController = navController,
-            startDestination = "showstudentdata",
+            startDestination = "show_student_data",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("showstudentdata") { ShowStudentData() }
+            composable("show_student_data") { ShowStudentData() }
             composable("about") { About(navController) }
         }
     }
@@ -144,7 +144,7 @@ private fun SideBar(
             currentDestination,
             drawerState,
             "Main Content",
-            "showstudentdata"
+            "show_student_data"
         )
         Divider(
             thickness = 2.dp,

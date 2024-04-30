@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -38,6 +39,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.pbmpraktikum.ui.screen.About
 import com.example.pbmpraktikum.ui.screen.ShowStudentData
+import com.example.pbmpraktikum.ui.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -48,6 +50,7 @@ fun MainScreen() {
     val currentDestination = navBackStackEntry?.destination?.route
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val userViewModel: UserViewModel = viewModel(factory = UserViewModel.factory)
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -60,7 +63,7 @@ fun MainScreen() {
                 FloatingActionButtonContent(scope, drawerState)
             }
         ) { innerPadding ->
-            NavigationScreenContent(navController, innerPadding)
+            NavigationScreenContent(navController, innerPadding, userViewModel)
         }
     }
 }
@@ -69,6 +72,7 @@ fun MainScreen() {
 private fun NavigationScreenContent(
     navController: NavHostController,
     innerPadding: PaddingValues,
+    userViewModel: UserViewModel
 ) {
     Surface(
         color = MaterialTheme.colorScheme.background
@@ -78,7 +82,7 @@ private fun NavigationScreenContent(
             startDestination = "show_student_data",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("show_student_data") { ShowStudentData() }
+            composable("show_student_data") { ShowStudentData(userViewModel) }
             composable("about") { About(navController) }
         }
     }

@@ -40,7 +40,6 @@ fun AddStudentData(navController: NavController, userViewModel: UserViewModel) {
     var name by remember { mutableStateOf("") }
     var nim by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var showSubmitDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
     Column(
@@ -58,8 +57,7 @@ fun AddStudentData(navController: NavController, userViewModel: UserViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        showSubmitDialog =
-            submitButton(name, nim, description, coroutineScope, userViewModel, showSubmitDialog)
+        SubmitButton(name, nim, description, coroutineScope, userViewModel)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -87,22 +85,21 @@ private fun dataTextField(description: String, fieldName: String, singleLine: Bo
 }
 
 @Composable
-private fun submitButton(
+private fun SubmitButton(
     name: String,
     nim: String,
     description: String,
     coroutineScope: CoroutineScope,
     userViewModel: UserViewModel,
-    showSubmitDialog: Boolean
-): Boolean {
-    var showSubmitDialog1 by remember { mutableStateOf(showSubmitDialog) }
+) {
+    var showSubmitDialog by remember { mutableStateOf(false) }
     Button(
         onClick = {
             val user = User(0, name, nim, description)
             coroutineScope.launch {
                 userViewModel.addUser(user)
             }
-            showSubmitDialog1 = true
+            showSubmitDialog = true
         },
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface),
@@ -115,9 +112,9 @@ private fun submitButton(
         )
     }
 
-    if (showSubmitDialog1) {
+    if (showSubmitDialog) {
         AlertDialog(
-            onDismissRequest = { showSubmitDialog1 = false },
+            onDismissRequest = { showSubmitDialog = false },
             confirmButton = {},
             title = {
                 Text(
@@ -134,7 +131,6 @@ private fun submitButton(
         )
     }
 
-    return showSubmitDialog1
 }
 
 @Composable
